@@ -1,0 +1,42 @@
+<nav class="bg-gray-800 p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <div class="space-x-4">
+      <a class="text-gray-300 hover:text-white" [routerLink]="['/profile']">Mi Perfil</a>
+      <a class="text-gray-300 hover:text-white" [routerLink]="['/profile/products']">Productos</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container mx-auto mt-8">
+  <h1 class="text-3xl font-bold mb-4">Bienvenido, {{ user.username }}</h1>
+  
+  <div class="bg-white shadow-md rounded-lg p-6">
+    <h2 class="text-2xl font-semibold mb-6">Configuración de Usuario</h2>
+    <form (ngSubmit)="updateProfile()">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+          Correo Electrónico
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" [(ngModel)]="user.email" name="email" required>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+          Nombre de Usuario
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" [(ngModel)]="user.username" name="username">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="avatar">
+          Avatar
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="avatar" type="text" [(ngModel)]="user.avatar" name="avatar">
+      </div>
+      <div class="flex items-center justify-between">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+          Guardar Cambios
+        </button>
+      </div>
+    </form>
+    <p *ngIf="message" class="text-red-500 text-xs italic">{{ message }}</p>
+  </div>
+</div>

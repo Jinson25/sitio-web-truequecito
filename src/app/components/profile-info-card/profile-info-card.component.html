@@ -1,0 +1,48 @@
+<div class="bg-white shadow-md rounded-lg p-6 top-4">
+  <h2 class="text-2xl font-bold mb-4 text-center">
+    <ng-container *ngIf="user; else noUser">
+      Mi Perfil
+    </ng-container>
+    <ng-template #noUser>
+      Inicia sesión para ver tu información
+    </ng-template>
+  </h2>
+
+  <ng-container *ngIf="user; else noUserContent">
+    <div class="flex items-center mb-4">
+      <img
+        [src]="user.avatar || 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'"
+        alt="Avatar"
+        class="w-12 h-12 rounded-full mr-4"
+      />
+      <div>
+        <p class="font-bold">{{ user.username }}</p>
+        <p class="text-gray-600">{{ user.email }}</p>
+      </div>
+    </div>
+    <div class="text-gray-600 mb-4">
+      <p>Intercambios realizados: <span class="font-bold">{{ user.exchanges || 0 }}</span></p>
+      <p>Reputación: <span class="font-bold">{{ user.reputation || '0' }}</span> / 5</p>
+    </div>
+    <button
+      (click)="goToProfile()"
+      class="mt-4 bg-pink-500 text-white px-4 py-2 rounded-full w-full"
+    >
+      Ver Perfil
+    </button>
+  </ng-container>
+
+  <ng-template #noUserContent>
+    <div class="flex items-center mb-4">
+      <div>
+        <p class="text-gray-600">Para acceder a esta información, debes iniciar sesión.</p>
+      </div>
+    </div>
+    <button
+      (click)="goToLogin()"
+      class="mt-4 bg-pink-500 text-white px-4 py-2 rounded-full w-full"
+    >
+      Iniciar sesión
+    </button>
+  </ng-template>
+</div>

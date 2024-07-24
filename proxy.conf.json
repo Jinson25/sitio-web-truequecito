@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://api-rest-truequecito.onrender.com",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

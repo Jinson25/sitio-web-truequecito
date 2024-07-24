@@ -1,0 +1,32 @@
+<nav class="bg-gray-800 p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <div class="space-x-4">
+      <a class="text-gray-300 hover:text-white" [routerLink]="['/profile']">Mi Perfil</a>
+      <a class="text-gray-300 hover:text-white" [routerLink]="['/profile/products']">Productos</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container mx-auto mt-8">
+  <h2 class="text-2xl font-semibold mb-6">Mis Productos</h2>
+  <div *ngIf="userProducts.length > 0; else noProducts">
+    <ul class="space-y-4">
+      <li *ngFor="let product of userProducts" class="bg-white shadow-md rounded-lg overflow-hidden flex">
+        <img class="w-40 h-40 object-cover" [src]="product.images[0]" alt="Product Image">
+        <div class="p-4 flex-1 flex flex-col">
+          <h5 class="text-xl font-bold mb-2">{{ product.title }}</h5>
+          <p class="text-gray-700 overflow-hidden overflow-ellipsis" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+            {{ product.description }}
+          </p>
+          <div class="flex space-x-2 mt-auto ml-auto">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="editProduct(product._id)">Editar</button>
+            <button class="bg-red-500 text-white px-4 py-2 rounded" (click)="deleteProduct(product._id)">Eliminar</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <ng-template #noProducts>
+    <p>No hay productos para mostrar</p>
+  </ng-template>
+</div>

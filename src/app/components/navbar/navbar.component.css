@@ -1,0 +1,45 @@
+/* Asegúrate de que el contenedor de los íconos esté correctamente alineado */
+.icon-container {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Texto que aparece debajo del ícono al hacer hover */
+.icon-container .icon-text {
+  display: none;
+  position: absolute;
+  bottom: -1.5rem; /* Ajusta según el espacio que desees entre el ícono y el texto */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1f2937; /* Fondo oscuro para el texto */
+  color: #f3f4f6; /* Color del texto */
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  z-index: 10; /* Asegúrate de que el texto esté encima de otros elementos */
+}
+
+/* Mostrar el texto al hacer hover */
+.icon-container:hover .icon-text {
+  display: block;
+}
+
+/* Alinea los íconos en el centro y agrega espacio entre ellos */
+.icon-container svg {
+  vertical-align: middle;
+  margin-bottom: 0.25rem; /* Espacio entre el ícono y el texto */
+}
+
+/* Asegúrate de que el navbar esté centrado */
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+}

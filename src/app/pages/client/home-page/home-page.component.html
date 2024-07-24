@@ -1,0 +1,43 @@
+<div class="container mx-auto p-6">
+  <div class="flex flex-wrap lg:flex-nowrap">
+    <!-- Main content -->
+    <div class="flex-1 lg:max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
+      <button class="bg-pink-500 text-white px-4 py-2 rounded-full text-sm mb-4">
+        ¡Explora el mundo del trueque!
+      </button>
+      <h1 class="text-4xl font-bold text-black mb-4 text-center">
+        Intercambia <span class="text-pink-500">los mejores productos</span> del mundo
+      </h1>
+      <p class="text-gray-600 text-center mb-8">
+        Hacemos felices a nuestros usuarios ofreciéndoles tantas opciones como sea posible para intercambiar
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="relative">
+          <img src="https://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c08504972.png" alt="Destination 1" class="w-full h-auto rounded-lg">
+        </div>
+        <div>
+          <img src="https://nanotroniconline.com/wp-content/uploads/2020/09/mouse-gamer-gaming-logitech-g903-nanotroniconline.png" alt="Destination 2" class="w-full h-auto rounded-lg">
+        </div>
+        <div class="relative">
+          <img src="https://pycca.vteximg.com.br/arquivos/ids/259657-600-600/U00796.png?v=638501822662500000" alt="Destination 3" class="w-full h-auto rounded-lg">
+        </div>
+      </div>
+      <div class="mt-8 flex space-x-4">
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-full">Comenzar Trueque</button>
+        <button class="bg-gray-300 text-black px-4 py-2 rounded-full">Top Productos</button>
+      </div>
+
+      <!-- Product list -->
+      <app-product-list></app-product-list>
+    </div>
+
+    <!-- Profile info card -->
+    <div class="w-full lg:w-1/4 lg:ml-6 mt-6 lg:mt-0 space-y-6">
+      <app-profile-info-card></app-profile-info-card>
+      
+
+      <app-proposals-list></app-proposals-list>
+     
+    </div>
+  </div>
+</div>

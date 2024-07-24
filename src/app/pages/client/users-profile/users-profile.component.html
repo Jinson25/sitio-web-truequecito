@@ -1,0 +1,40 @@
+<div class="container mx-auto mt-8">
+  <div class="rounded-lg p-6 text-center">
+    <h1 class="text-3xl font-bold">{{ user.username }}</h1>
+    <img [src]="user.avatar" alt="Avatar" class="w-24 h-24 rounded-full mx-auto mt-4">
+    <p class="text-gray-700">{{ user.email }}</p>
+
+    <div class="flex justify-center space-x-4 mt-4">
+      <div class="text-center">
+        <span class="font-bold">{{ user.following?.length }}</span>
+        <p class="text-gray-600">Siguiendo</p>
+      </div>
+      <div class="text-center">
+        <span class="font-bold">{{ user.followers?.length }}</span>
+        <p class="text-gray-600">Seguidores</p>
+      </div>
+      <div class="text-center">
+        <span class="font-bold">{{ user.likes }}</span>
+        <p class="text-gray-600">Me gusta</p>
+      </div>
+    </div>
+
+    <div class="flex justify-center space-x-4 mt-4">
+      <button (click)="showComponent('share')" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Intercambios</button>
+      <button (click)="showComponent('products')" class="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Productos</button>
+      <button (click)="followUser()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Seguir</button>
+    </div>
+  </div>
+
+  <div class="mt-8">
+    <ng-container *ngIf="activeComponent === 'share'">
+      <!-- Contenido para Intercambios -->
+      <p>Aquí va el componente para ver los intercambios que realizo.</p>
+    </ng-container>
+    <ng-container *ngIf="activeComponent === 'products'">
+      <!-- Contenido para Productos -->
+
+        <!-- Más detalles del producto -->
+    </ng-container>
+  </div>
+</div>

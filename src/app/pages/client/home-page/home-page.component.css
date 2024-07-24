@@ -1,0 +1,63 @@
+.exchange-container {
+  position: relative;
+  height: 250px; /* Ajusta según sea necesario */
+}
+
+.product-card-1,
+.product-card-2 {
+  width: 48%; /* Asegura que ambas tarjetas ocupen el mismo espacio */
+  height: 100%;
+}
+
+.product-card-1 img,
+.product-card-2 img {
+  max-height: 150px;
+  width: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+.product-card-1 h3,
+.product-card-2 h3,
+.product-card-1 p,
+.product-card-2 p {
+  text-align: center;
+}
+
+/* Animaciones */
+@keyframes swap {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes swap-reverse {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.exchange-container:hover .product-card-1,
+.exchange-container:hover .product-card-2 {
+  animation: none;
+}
+
+.exchange-container:hover .product-card-1 {
+  animation: swap 2s ease-in-out;
+}
+
+.exchange-container:hover .product-card-2 {
+  animation: swap-reverse 2s ease-in-out;
+}

@@ -1,0 +1,19 @@
+<div class="flex items-center p-4">
+  <div class="flex-grow">
+    <input
+      [(ngModel)]="searchQuery"
+      (input)="onSearchQueryChange()"
+      type="text"
+      class="w-full p-2 rounded-l-md border text-pink focus:outline-none focus:ring focus:ring-blue-500"
+      placeholder="Buscar"
+    />
+  </div>
+  <button
+    (click)="search()"
+    class="p-2 bg-blue-600 text-white rounded-r-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-500"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M12.9 14.32a8 8 0 111.42-1.42l4.28 4.28a1 1 0 01-1.42 1.42l-4.28-4.28zM8 14A6 6 0 108 2a6 6 0 000 12z" clip-rule="evenodd" />
+    </svg>
+  </button>
+</div>

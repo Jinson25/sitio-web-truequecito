@@ -1,0 +1,39 @@
+<nav class="bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <div class="space-x-4">
+        <a class="text-gray-300 hover:text-white" [routerLink]="['/profile']">Mi Perfil</a>
+        <a class="text-gray-300 hover:text-white" [routerLink]="['/profile/products']">Productos</a>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="container mx-auto mt-8" *ngIf="product">
+    <h2 class="text-2xl font-semibold mb-6">Editar Producto</h2>
+    <form (ngSubmit)="saveProduct()">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+          Título
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" [(ngModel)]="product.title" name="title" required>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
+          Descripción
+        </label>
+        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" [(ngModel)]="product.description" name="description" required></textarea>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="images">
+          Imágenes
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="images" type="text" [(ngModel)]="product.images[0]" name="images" required>
+      </div>
+      <div class="flex items-center justify-between">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+          Guardar
+        </button>
+      </div>
+    </form>
+    <p *ngIf="message" class="text-red-500 text-xs italic">{{ message }}</p>
+  </div>
+  
