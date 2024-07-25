@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ProductService } from '../../../services/product.service';
 import { AuthService } from '../../../services/auth.service';
+import { URL_EXCHANGE } from '../../../shared/constants/url.constants';
 
 @Component({
   selector: 'app-propose-exchange-pages',
@@ -77,7 +78,7 @@ export class ProposeExchangePagesComponent implements OnInit {
       const token = this.authService.getToken();
       const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
 
-      this.http.post('/api/exchanges', exchangeData, { headers }).subscribe({
+      this.http.post(URL_EXCHANGE, exchangeData, { headers }).subscribe({
         next: () => {
           this.message = 'Propuesta de intercambio enviada correctamente.';
         },

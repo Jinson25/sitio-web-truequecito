@@ -5,6 +5,7 @@ import { Product } from '../../../shared/interfaces/product.interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { BASE_URL } from '../../../shared/constants/url.constants';
 
 @Component({
   selector: 'app-edit-product-page',
@@ -50,7 +51,7 @@ export class EditProductPageComponent implements OnInit {
     if (this.product) {
       this.productService.editProduct(this.product._id, this.product).subscribe({
         next: () => {
-          this.router.navigate(['/profile/products']);
+          this.router.navigate([`${BASE_URL}/profile/products`]);
         },
         error: (error) => {
           console.error('Error al guardar el producto:', error);

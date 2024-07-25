@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
+import { URL_PRODUCTS } from '../../../shared/constants/url.constants';
 
 @Component({
   selector: 'app-creat-product-pages',
@@ -59,7 +60,7 @@ export class CreatProductPagesComponent {
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.post('/api/products', productData, { headers }).subscribe(
+    this.http.post(URL_PRODUCTS, productData, { headers }).subscribe(
       response => {
         console.log('Producto agregado:', response);
         this.router.navigate(['/']); // Redirigir a la página principal o a la página de productos

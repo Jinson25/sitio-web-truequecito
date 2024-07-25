@@ -1,4 +1,4 @@
-const BASE_URL = 'https://api-rest-truequecito.onrender.com/api';
+export const BASE_URL = 'https://api-rest-truequecito.onrender.com/api';
 
 //AUTH
 export const URL_LOGIN = `${BASE_URL}/auth/login`;
