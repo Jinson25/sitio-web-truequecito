@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { Proposal } from '../shared/interfaces/product.interface';
+import { URL_EXCHANGE } from '../shared/constants/url.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExchangeService {
-  private apiUrl = '/api/exchanges';
+  private apiUrl = URL_EXCHANGE;
 
   constructor(
     private http: HttpClient,

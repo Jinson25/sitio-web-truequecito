@@ -16,3 +16,5 @@ export const URL_SEARCH = `${BASE_URL}/products`;
 
 //PROFILE
 export const URL_PROFILE = `${BASE_URL}/auth/user`
+
+export const URL_EXCHANGE = `${BASE_URL}/exchanges`
