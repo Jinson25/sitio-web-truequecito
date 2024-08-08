@@ -11,7 +11,7 @@ export class UserService {
   private userSubject = new BehaviorSubject<User | null>(null);
   user$ = this.userSubject.asObservable();
 
-  private readonly apiUrl = 'http://localhost:5000/api/user';
+  private readonly apiUrl = 'https://api-rest-truequecito.onrender.com/api/user';
 
   constructor(
     private http: HttpClient,

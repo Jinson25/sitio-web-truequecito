@@ -85,7 +85,7 @@ export class ProposeExchangePagesComponent implements OnInit {
       const token = this.authService.getToken();
       const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
 
-      this.http.post('/api/exchanges', exchangeData, { headers }).subscribe({
+      this.http.post('https://api-rest-truequecito.onrender.com/api/exchanges', exchangeData, { headers }).subscribe({
         next: () => {
           Swal.fire({
             icon: 'success',

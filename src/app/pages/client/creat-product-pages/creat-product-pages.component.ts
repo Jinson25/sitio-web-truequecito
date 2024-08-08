@@ -77,7 +77,7 @@ export class CreatProductPagesComponent {
     console.log('Enviando datos del producto:', productData); // Registro de datos del producto
     console.log('Token:', token); // Registro del token
 
-    this.http.post('/api/products', productData, { headers }).subscribe(
+    this.http.post('https://api-rest-truequecito.onrender.com/api/products', productData, { headers }).subscribe(
       response => {
         console.log('Producto agregado:', response);
         Swal.fire({

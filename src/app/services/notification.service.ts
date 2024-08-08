@@ -39,7 +39,7 @@ export class NotificationService {
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get<Notification[]>('/api/notifications', { headers }).subscribe(
+    this.http.get<Notification[]>('https://api-rest-truequecito.onrender.com/api/notifications', { headers }).subscribe(
       (notifications) => {
         this.notifications = notifications.map(notification => ({
           ...notification,
@@ -71,7 +71,7 @@ export class NotificationService {
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    return this.http.post(`/api/notifications/${notificationId}/read`, {}, { headers });
+    return this.http.post(`https://api-rest-truequecito.onrender.com/api/notifications/${notificationId}/read`, {}, { headers });
   }
 
   getUnreadCount(): number {

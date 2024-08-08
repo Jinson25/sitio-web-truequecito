@@ -29,7 +29,7 @@ export class UsersProfileComponent implements OnInit {
   }
 
   getUser(): void {
-    this.http.get<User>(`http://localhost:5000/api/user/${this.Id}`)
+    this.http.get<User>(`https://api-rest-truequecito.onrender.com/api/user/${this.Id}`)
       .subscribe(
         (data) => this.user = data,
         (error) => console.error('Error fetching user:', error)
@@ -42,7 +42,7 @@ export class UsersProfileComponent implements OnInit {
   }
 
   followUser(): void {
-    this.http.post(`http://localhost:5000/api/user/${this.Id}/follow`, {})
+    this.http.post(`https://api-rest-truequecito.onrender.com/api/user/${this.Id}/follow`, {})
       .subscribe(
         (response: any) => {
           this.message = response.message;
