@@ -32,7 +32,6 @@ export class UserProductsComponent implements OnInit {
   loadUserProducts(): void {
     this.productService.getUserProducts().subscribe({
       next: (products) => {
-        console.log('Productos del usuario recibidos:', products);
         this.userProducts = products;
       },
       error: (error) => {

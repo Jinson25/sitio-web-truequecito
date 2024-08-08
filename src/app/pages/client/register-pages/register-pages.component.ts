@@ -48,7 +48,7 @@ export class RegisterPagesComponent {
 
       this.authService.register(this.email, this.password, this.username).subscribe({
         next: (response) => {
-          console.log('Respuesta de registro:', response);
+        
           this.message = 'Registro exitoso';
           Swal.fire({
             icon: 'success',

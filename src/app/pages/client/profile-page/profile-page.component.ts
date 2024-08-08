@@ -38,7 +38,7 @@ export class ProfilePageComponent implements OnInit {
       this.user = authResponse;
       this.loadUserProducts();
     } else {
-      console.log('Usuario no autenticado');
+     
       this.router.navigate(['/login']);
     }
   }

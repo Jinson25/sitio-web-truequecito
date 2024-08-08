@@ -74,8 +74,7 @@ export class CreatProductPagesComponent {
     }
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    console.log('Enviando datos del producto:', productData); // Registro de datos del producto
-    console.log('Token:', token); // Registro del token
+
 
     this.http.post('https://api-rest-truequecito.onrender.com/api/products', productData, { headers }).subscribe(
       response => {

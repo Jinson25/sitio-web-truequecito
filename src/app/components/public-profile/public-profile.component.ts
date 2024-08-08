@@ -52,7 +52,6 @@ export class PublicProfileComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.currentUserId = this.authService.getUser()?.id || ''; // Obtener el ID del usuario actual desde el servicio de autenticación
-    console.log('ID del usuario actual:', this.currentUserId);
   }
 
   ngOnChanges(): void {
@@ -70,10 +69,10 @@ export class PublicProfileComponent implements OnInit, OnChanges {
   }
 
   loadUserProfile(): void {
-    console.log('Cargando perfil para userId:', this.userId);
+
     this.userService.getUserById(this.userId).subscribe({
       next: (data) => {
-        console.log('Datos del usuario recibidos:', data);
+  
         this.user = data.user;
         // Verificar que cada producto tenga imágenes definidas
         this.user.products?.forEach(product => {
@@ -83,9 +82,6 @@ export class PublicProfileComponent implements OnInit, OnChanges {
         });
         this.isFollowing = Array.isArray(this.user.followers) ? this.user.followers.includes(this.currentUserId) : false;
         this.hasLiked = Array.isArray(this.user.likes) ? this.user.likes.includes(this.currentUserId) : false;
-        console.log('isFollowing:', this.isFollowing);
-        console.log('hasLiked:', this.hasLiked);
-        console.log('User Products:', this.user.products); // Verificar productos del usuario
         this.loading = false;
       },
       error: (error) => {
@@ -97,13 +93,11 @@ export class PublicProfileComponent implements OnInit, OnChanges {
   }
 
   followUser(): void {
-    console.log('Toggling follow status. isFollowing:', this.isFollowing);
     if (this.isFollowing) {
       this.userService.unfollowUser(this.userId).subscribe({
         next: () => {
           this.isFollowing = false;
           this.user.followers = this.user.followers?.filter(followerId => followerId !== this.currentUserId) || [];
-          console.log('Dejado de seguir al usuario. Followers actualizados:', this.user.followers);
         },
         error: (error) => {
           console.error('Error al dejar de seguir al usuario:', error);
@@ -114,7 +108,6 @@ export class PublicProfileComponent implements OnInit, OnChanges {
         next: () => {
           this.isFollowing = true;
           this.user.followers = [...(this.user.followers || []), this.currentUserId];
-          console.log('Seguido al usuario. Followers actualizados:', this.user.followers);
         },
         error: (error) => {
           console.error('Error al seguir al usuario:', error);
@@ -124,13 +117,11 @@ export class PublicProfileComponent implements OnInit, OnChanges {
   }
 
   likeUser(): void {
-    console.log('Toggling like status. hasLiked:', this.hasLiked);
     if (!this.hasLiked) {
       this.userService.likeUser(this.userId).subscribe({
         next: () => {
           this.hasLiked = true;
           this.user.likes = [...(this.user.likes || []), this.currentUserId];
-          console.log('Dado like al usuario. Likes actualizados:', this.user.likes);
         },
         error: (error) => {
           console.error('Error al dar like al usuario:', error);

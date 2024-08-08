@@ -125,7 +125,7 @@ export class AuthService {
           return null;
         }
       } else {
-        console.log('No se encontró usuario en localStorage');
+       
       }
     }
     return null;

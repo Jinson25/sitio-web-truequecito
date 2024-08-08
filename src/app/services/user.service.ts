@@ -36,7 +36,7 @@ export class UserService {
     const token = this.getToken();
     const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
   
-    console.log('Token usado para actualizar el perfil:', token); // Log del token
+ 
   
     return this.http.put<User>(`${this.apiUrl}/profile`, user, { headers }).pipe(
       catchError(error => {
@@ -50,9 +50,9 @@ export class UserService {
 
   followUser(userId: string): Observable<any> {
     const url = `${this.apiUrl}/${userId}/follow`;
-    console.log('Calling followUser API with URL:', url);
+
     const token = this.getToken();
-    console.log('Token usado:', token);
+
     return this.http.post(url, {}, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${token}`
@@ -67,9 +67,9 @@ export class UserService {
 
   unfollowUser(userId: string): Observable<any> {
     const url = `${this.apiUrl}/${userId}/unfollow`;
-    console.log('Calling unfollowUser API with URL:', url);
+ 
     const token = this.getToken();
-    console.log('Token usado:', token);
+ 
     return this.http.post(url, {}, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${token}`
@@ -84,9 +84,9 @@ export class UserService {
 
   likeUser(userId: string): Observable<any> {
     const url = `${this.apiUrl}/${userId}/like`;
-    console.log('Calling likeUser API with URL:', url);
+
     const token = this.getToken();
-    console.log('Token usado:', token);
+
     return this.http.post(url, {}, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${token}`

@@ -41,7 +41,6 @@ export class ProfileInfoCardComponent implements OnInit {
       })
     ).subscribe((response) => {
       if (response) {
-        console.log('Usuario recibido:', response.user);
         this.user = response.user;
       }
       this.loading = false;
@@ -50,10 +49,8 @@ export class ProfileInfoCardComponent implements OnInit {
 
   updateProfile(): void {
     if (this.user) {
-      console.log('Actualizando perfil:', this.user);
       this.userService.updateUserProfile(this.user).subscribe({
         next: (updatedUser) => {
-          console.log('Perfil actualizado:', updatedUser);
           this.user = updatedUser;
         },
         error: (error) => {

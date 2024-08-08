@@ -40,7 +40,7 @@ export class ProposeExchangePagesComponent implements OnInit {
     this.productService.getProductById(productId).subscribe({
       next: (product) => {
         this.product = product;
-        console.log('Producto cargado:', product); // Añadir log para verificar datos
+       
       },
       error: (error: any) => {
         console.error('Error al cargar el producto:', error);
@@ -113,6 +113,6 @@ export class ProposeExchangePagesComponent implements OnInit {
   onImageError(event: Event) {
     const imgElement = event.target as HTMLImageElement;
     imgElement.src = 'assets/default_image.jpg';  // Ruta a la imagen por defecto
-    console.log('Error de imagen, cargando imagen por defecto');
+
   }
 }

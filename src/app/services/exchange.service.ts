@@ -82,7 +82,7 @@ export class ExchangeService {
   rejectExchange(exchangeId: string): Observable<any> {
     const token = this.getToken();
     const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
-    console.log('Rejecting exchange with headers:', headers);
+ 
     return this.http.put(`${this.apiUrl}/reject/${exchangeId}`, {}, { headers });
   }
   

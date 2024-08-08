@@ -49,7 +49,6 @@ export class ProductDetailComponent implements OnInit {
     if (this.exchangeId) {
       this.exchangeService.updateExchangeStatus(this.exchangeId, 'rejected').subscribe({
         next: (response) => {
-          console.log('Oferta rechazada:', response);
           this.router.navigate(['/']);
         },
         error: (error) => {

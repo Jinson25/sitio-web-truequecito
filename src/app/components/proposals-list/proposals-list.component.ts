@@ -52,7 +52,7 @@ export class ProposalsListComponent implements OnInit {
       this.loadReceivedExchanges();
       this.loadSentExchanges();
     } else {
-      console.error('Usuario no autenticado');
+ 
     }
   }
 

@@ -156,8 +156,6 @@ export class PaymentComponent implements OnInit {
     if (this.exchangeId) {
       this.exchangeService.updateExchangeStatus(this.exchangeId, 'accepted').subscribe({
         next: (response) => {
-          console.log('Oferta aceptada:', response);
-          this.verifyAndCompleteExchange();
         },
         error: (error) => {
           console.error('Error al aceptar la oferta:', error);
@@ -173,7 +171,6 @@ export class PaymentComponent implements OnInit {
       if (otherReceipt) {
         this.exchangeService.updateExchangeStatus(this.exchange._id, 'completed').subscribe({
           next: (response) => {
-            console.log('Exchange completed:', response);
             Swal.fire({
               icon: 'success',
               title: 'Intercambio completado',
@@ -221,7 +218,6 @@ export class PaymentComponent implements OnInit {
     if (this.exchangeId) {
       this.exchangeService.setExchangeStatusPending(this.exchangeId).subscribe({
         next: (response) => {
-          console.log('Estado del intercambio actualizado a pendiente:', response);
         },
         error: (error) => {
           console.error('Error al actualizar el estado del intercambio:', error);

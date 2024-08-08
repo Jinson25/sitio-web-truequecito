@@ -40,8 +40,7 @@ export class ProductService {
 
     return forkJoin([products$, exchanges$]).pipe(
       map(([products, exchanges]) => {
-        console.log('Productos obtenidos:', products);
-        console.log('Intercambios completados obtenidos:', exchanges);
+    
 
         const completedProductIds = new Set<string>();
         exchanges.forEach(exchange => {
@@ -53,11 +52,12 @@ export class ProductService {
           }
         });
 
-        console.log('IDs de productos completados:', completedProductIds);
+       
 
         const filteredProducts = products.filter(product => product && product._id && !completedProductIds.has(product._id.toString()));
 
-        console.log('Productos después de filtrar:', filteredProducts);
+      
+        
 
         return filteredProducts;
       }),
