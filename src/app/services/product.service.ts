@@ -23,7 +23,7 @@ export class ProductService {
 
   getAllProductsBySearch(searchTerm: string): Observable<Product[]> {
     const encodedSearchTerm = encodeURIComponent(searchTerm);
-    return this.http.get<Product[]>(`/api/products/search/${encodedSearchTerm}`).pipe(
+    return this.http.get<Product[]>(`https://api-rest-truequecito.onrender.com/api/products/search/${encodedSearchTerm}`).pipe(
       catchError(error => {
         console.error('Error en búsqueda de productos:', error);
         return throwError(() => new Error('Error en la búsqueda de productos. Inténtalo de nuevo más tarde.'));
@@ -35,8 +35,8 @@ export class ProductService {
     const token = this.getToken();
     const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
 
-    const products$ = this.http.get<Product[]>('/api/products/user-products', { headers });
-    const exchanges$ = this.http.get<Exchange[]>('/api/exchanges/completed', { headers });
+    const products$ = this.http.get<Product[]>('https://api-rest-truequecito.onrender.com/api/products/user-products', { headers });
+    const exchanges$ = this.http.get<Exchange[]>('https://api-rest-truequecito.onrender.com/api/exchanges/completed', { headers });
 
     return forkJoin([products$, exchanges$]).pipe(
       map(([products, exchanges]) => {
@@ -71,7 +71,7 @@ export class ProductService {
   getProducts(): Observable<Product[]> {
     const token = this.getToken();
     const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
-    return this.http.get<Product[]>('/api/products', { headers }).pipe(
+    return this.http.get<Product[]>('https://api-rest-truequecito.onrender.com/api/products', { headers }).pipe(
       catchError(error => {
         console.error('Error al obtener productos:', error);
         return throwError(() => new Error('Error al obtener productos.'));
@@ -80,7 +80,7 @@ export class ProductService {
   }
 
   getProductById(productId: string): Observable<Product> {
-    return this.http.get<Product>(`/api/products/${productId}`).pipe(
+    return this.http.get<Product>(`https://api-rest-truequecito.onrender.com/api/products/${productId}`).pipe(
       catchError(error => {
         console.error(`Error al obtener el producto con ID ${productId}:`, error);
         return throwError(() => new Error('Error al obtener el producto.'));
@@ -91,7 +91,7 @@ export class ProductService {
   createProduct(product: Product): Observable<Product> {
     const token = this.getToken();
     const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
-    return this.http.post<Product>('/api/products', product, { headers }).pipe(
+    return this.http.post<Product>('https://api-rest-truequecito.onrender.com/api/products', product, { headers }).pipe(
       catchError(error => {
         console.error('Error al crear el producto:', error);
         return throwError(() => new Error('Error al crear el producto.'));
@@ -102,7 +102,7 @@ export class ProductService {
   editProduct(productId: string, product: Product): Observable<Product> {
     const token = this.getToken();
     const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
-    return this.http.put<Product>(`/api/products/${productId}`, product, { headers }).pipe(
+    return this.http.put<Product>(`https://api-rest-truequecito.onrender.com/api/products/${productId}`, product, { headers }).pipe(
       catchError(error => {
         console.error(`Error al editar el producto con ID ${productId}:`, error);
         return throwError(() => new Error('Error al editar el producto.'));
@@ -113,7 +113,7 @@ export class ProductService {
   deleteProduct(productId: string): Observable<void> {
     const token = this.getToken();
     const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
-    return this.http.delete<void>(`/api/products/${productId}`, { headers }).pipe(
+    return this.http.delete<void>(`https://api-rest-truequecito.onrender.com/api/products/${productId}`, { headers }).pipe(
       catchError(error => {
         console.error(`Error al eliminar el producto con ID ${productId}:`, error);
         return throwError(() => new Error('Error al eliminar el producto.'));
