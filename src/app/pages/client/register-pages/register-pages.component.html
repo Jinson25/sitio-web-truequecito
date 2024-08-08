@@ -1,26 +1,9 @@
 <div class="min-h-screen flex items-center justify-center bg-gray-100">
-  <div
-    class="bg-white shadow-md w-full max-w-4xl flex rounded-lg overflow-hidden"
-  >
-    <div class="w-1/2 relative">
-      <img
-        src="assets/register.jpg"
-        alt="Cover Image"
-        class="w-full h-full object-cover"
-      />
-      <div
-        class="absolute inset-0 flex flex-col justify-between p-8 text-black font-extrabold"
-      >
-        <div>
-          <p class="text">
-            "Cambia lo que tienes, <br />encuentra lo que quieres."
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="w-1/2 p-8 border-l border-gray-300">
-      <!-- Añadido border-l para la línea -->
-      <h1 class="text-2xl font-bold mb-6 text-center">Crea una Cuenta</h1>
+  <div class="w-full max-w-md p-8 bg-white shadow-md rounded-lg">
+      <h2 class="text-2xl font-bold text-center">Crea una Cuenta</h2>
+        <h2 class="text-1xl font-bold mb-6 text-center">
+          "Cambia lo que tienes, encuentra lo que quieres."
+        </h2>
       <form #registerForm="ngForm" (ngSubmit)="handleSubmit(registerForm)">
         <div class="mb-4">
           <label for="username" class="block text-sm font-medium text-gray-700"
@@ -135,6 +118,5 @@
           >Iniciar Sesión</a
         >
       </p>
-    </div>
   </div>
 </div>
