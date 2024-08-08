@@ -1,3 +1,6 @@
+// shared/interfaces/auth.interfaces.ts
+import { Product } from './product.interface';  // Importar la interfaz Product
+
 export interface interfaceLogin {
   email: string;
   password: string;
@@ -14,17 +17,21 @@ export class User {
   id!: string;
   username!: string;
   email!: string;
-  password?: string; // Optional for profile update
+  password?: string;
   avatar?: string;
   token!: string;
   role!: string;
-  exchanges?: number; // Add exchanges property
-  reputation?: number; // Add reputation property
+  exchanges?: number;
+  reputation?: number;
   following?: string[];
   followers?: string[];
-  likes?: number;
+  likes?: string[];
+  products?: { title: string, images: string[], _id: string }[]; // Asegurarse de que `images` sea un array de strings
+  name?: string;
+  location?: string;
+  address?: string; // Cambiar a un string simple para la dirección completa
+  phone?: string;  // Añadir campo para el teléfono
 }
-
 
 export interface AuthResponse {
   token: string;
@@ -37,5 +44,7 @@ export interface AuthResponse {
     role: string;
     exchanges?: number;
     reputation?: number;
+    address?: string;  // Cambiar a un string simple para la dirección completa
+    phone?: string;  // Añadir campo para el teléfono
   };
 }

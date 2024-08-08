@@ -1,15 +1,21 @@
 <div class="container mx-auto p-6">
-  <div class="flex flex-wrap lg:flex-nowrap bg-white shadow-md rounded-lg">
+  <div class="flex flex-wrap lg:flex-nowrap bg-white shadow-lg rounded-lg overflow-hidden">
     <!-- Left side: Product details -->
     <div class="w-full lg:w-2/3 p-6 border-b lg:border-b-0 lg:border-r border-gray-200">
       <div *ngIf="product" class="flex flex-col mb-6">
-        <img src="{{ product.images[0] }}" alt="{{ product.title }}" class="w-full h-80 object-cover rounded mb-4">
-        <h2 class="text-2xl font-semibold mb-2">{{ product.title }}</h2>
-        <p class="text-gray-600 text-justify">{{ product.description }}</p>
+        <div class="h-96 flex items-center justify-center overflow-hidden rounded-lg mb-4 bg-gray-100">
+          <img [src]="product.images[0]" [alt]="product.title" class="w-full h-full object-contain" (error)="onImageError($event)">
+        </div>
+        <h2 class="text-3xl font-semibold mb-2 text-pink-600">{{ product.title }}</h2>
+        <div class="text-gray-700 text-lg mb-4">
+          <p><strong>Estado:</strong> {{ product.estado }}</p>
+          <p><strong>Preferencia de Intercambio:</strong> {{ product.preference }}</p>
+        </div>
+        <p class="text-gray-600 text-justify mb-4">{{ product.description }}</p>
       </div>
     </div>
     <!-- Right side: Exchange form -->
-    <div class="w-full lg:w-1/3 p-6">
+    <div class="w-full lg:w-1/3 p-6 bg-pink-50">
       <h1 class="text-3xl font-bold mb-6 text-center text-pink-600">Proponer Intercambio</h1>
       <form class="space-y-6" #exchangeForm="ngForm" (ngSubmit)="handleSubmit(exchangeForm)" novalidate>
         <div>
@@ -44,7 +50,7 @@
           <button 
             type="submit" 
             [disabled]="exchangeForm.invalid" 
-            class="w-full py-3 px-6 bg-pink-600 text-white rounded-md shadow-sm hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
+            class="w-full py-3 px-6 bg-pink-600 text-white rounded-md shadow-sm hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition-transform transform hover:scale-105">
             Proponer Intercambio
           </button>
         </div>

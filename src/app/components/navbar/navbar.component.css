@@ -43,3 +43,20 @@
   display: flex;
   justify-content: center;
 }
+
+.icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.icon-text {
+  display: none;
+  margin-left: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .icon-text {
+    display: inline;
+  }
+}

@@ -1,31 +1,37 @@
 <div class="container mx-auto px-4 py-8" *ngIf="exchange">
-  <div class="flex justify-center">
-    <div class="w-1/2 m-2 p-5 border-2 rounded-lg" *ngIf="productOffered">
-      <div class="flex justify-center pb-5" *ngIf="productOffered.images && productOffered.images.length > 0">
-        <img [src]="getImageSrc(productOffered.images)" alt="Imagen del producto ofrecido" class="w-1/2 h-auto rounded-lg" (error)="onImageError($event)">
+  <div class="flex justify-center space-x-4">
+    <div class="w-1/2 m-2 p-5 border-2 rounded-lg flex flex-col items-center justify-between" *ngIf="productOffered">
+      <div class="flex justify-center pb-5">
+        <img [src]="getImageSrc(productOffered.images)" alt="Imagen del producto ofrecido" class="w-full h-48 object-contain rounded-lg" (error)="onImageError($event)">
       </div>
-      <div class="text-left">
-        <h1 class="font-bold" *ngIf="productOffered.title">{{ productOffered.title }}</h1>
-        <p *ngIf="productOffered.description">{{ productOffered.description }}</p>
-        <p *ngIf="productOffered.estado">Estado: <span class="font-semibold">{{ productOffered.estado }}</span></p>
+      <div class="text-left flex-grow">
+        <h1 class="font-bold text-pink-500 text-xl">{{ productOffered.title }}</h1>
+        <p class="text-gray-700">{{ productOffered.description }}</p>
+        <p class="text-gray-600">Estado: <span class="font-semibold">{{ productOffered.estado }}</span></p>
       </div>
     </div>
 
-    <div class="w-1/2 m-2 p-5 border-2 rounded-lg" *ngIf="productRequested">
-      <div class="flex justify-center pb-5" *ngIf="productRequested.images && productRequested.images.length > 0">
-        <img [src]="getImageSrc(productRequested.images)" alt="Imagen del producto solicitado" class="w-1/2 h-auto rounded-lg" (error)="onImageError($event)">
+    <div class="w-1/2 m-2 p-5 border-2 rounded-lg flex flex-col items-center justify-between" *ngIf="productRequested">
+      <div class="flex justify-center pb-5">
+        <img [src]="getImageSrc(productRequested.images)" alt="Imagen del producto solicitado" class="w-full h-48 object-contain rounded-lg" (error)="onImageError($event)">
       </div>
-      <div class="text-left">
-        <h1 class="font-bold" *ngIf="productRequested.title">{{ productRequested.title }}</h1>
-        <p *ngIf="productRequested.description">{{ productRequested.description }}</p>
-        <p *ngIf="productRequested.estado">Estado: <span class="font-semibold">{{ productRequested.estado }}</span></p>
+      <div class="text-left flex-grow">
+        <h1 class="font-bold text-pink-500 text-xl">{{ productRequested.title }}</h1>
+        <p class="text-gray-700">{{ productRequested.description }}</p>
+        <p class="text-gray-600">Estado: <span class="font-semibold">{{ productRequested.estado }}</span></p>
       </div>
     </div>
   </div>
 
   <div class="mt-8 p-5 border-2 rounded-lg">
+    <h2 class="font-bold text-xl mb-4">Información de Dirección</h2>
+    <input class="block w-full p-2 border rounded" [(ngModel)]="userAddress" placeholder="Dirección" />
+    <p>Teléfono: <input class="block w-full p-2 border rounded" [(ngModel)]="phone" placeholder="Teléfono" maxlength="10" /> <!-- Campo de teléfono con validación de 10 dígitos --></p>
+  </div>
+
+  <div class="mt-8 p-5 border-2 rounded-lg">
     <h2 class="font-bold text-xl mb-4">Detalles del Envío</h2>
-    <p>Dirección de Envío: <span class="font-semibold">Yavirac</span></p>
+    <p>Dirección de Envío: <a href="https://maps.app.goo.gl/VrpgHoK4JjrXAPaC8" class="font-semibold text-blue-500" target="_blank">Yavirac</a></p>
     <p>Envío del Producto al otro usuario: <span class="font-semibold">$6.00</span></p>
     <p>Tasa de Servicio: <span class="font-semibold">$0.50</span></p>
     <p class="italic text-sm">*Una vez recibido y revisado el producto, se enviará al otro usuario.</p>
@@ -35,10 +41,9 @@
     <p>Cuenta: <span class="font-semibold">123456789</span></p>
     <p>Correo: <span class="font-semibold">bancoejemplo.com</span></p>
     <p>Cédula: <span class="font-semibold">1234567890</span></p>
-    <p>Teléfono: <span class="font-semibold">+123456789</span></p>
     <p>Código Único: <span class="font-semibold">{{ uniqueCode }}</span> <span class="italic text-sm">(Este código debe ser puesto como descripción de transferencia para validar su pago)</span></p>
 
-    <div class="mt-4">
+    <div class="mt-8">
       <label class="block mb-2 font-bold" for="comprobante">Subir Comprobante:</label>
       <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" id="comprobante" type="file" (change)="onFileSelected($event)">
     </div>
@@ -48,8 +53,12 @@
     </div>
 
     <div class="mt-4 flex justify-center space-x-4">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="submitComprobante()">Finalizar Trueque</button>
+      <button *ngIf="shouldShowPaymentButton()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" (click)="submitComprobante()">Finalizar Trueque</button>
       <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" (click)="cancelarTrueque()">Cancelar Trueque</button>
+    </div>
+
+    <div *ngIf="!shouldShowPaymentButton()" class="mt-4 text-center">
+      <p>Ambos comprobantes han sido subidos. El intercambio está pendiente de revisión por el administrador.</p>
     </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "https://api-rest-truequecito.onrender.com",
+    "target": "http://localhost:5000",
     "secure": false,
     "changeOrigin": true
   }

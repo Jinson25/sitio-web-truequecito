@@ -24,7 +24,11 @@ export class LoginPagesComponent {
       this.authService.login(this.email, this.password).subscribe({
         next: (response) => {
           this.message = 'Inicio de sesión exitoso';
-          this.router.navigate(['/']);
+          if (response.user.role === 'admin') {
+            this.router.navigate(['/dashboard']);
+          } else {
+            this.router.navigate(['/']);
+          }
         },
         error: (error) => {
           this.message = error.error?.message || 'Error en el inicio de sesión';
@@ -38,8 +42,8 @@ export class LoginPagesComponent {
   loginWithGoogle(): void {
     this.authService.loginWithGoogle();
   }
+
   loginWithDiscord(): void {
     this.authService.loginWithDiscord();
   }
-  
 }

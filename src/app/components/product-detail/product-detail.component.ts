@@ -39,9 +39,8 @@ export class ProductDetailComponent implements OnInit {
   }
 
   acceptOffer(): void {
-    if (this.product) {
-      console.log('Oferta aceptada para el producto:', this.product._id);
-      // Redirigir a la página de pago
+    if (this.exchangeId) {
+      // Redirigir a la página de pago sin actualizar el estado de la oferta
       this.router.navigate(['/payment', this.exchangeId]);
     }
   }

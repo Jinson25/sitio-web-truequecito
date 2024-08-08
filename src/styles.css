@@ -1,7 +1,14 @@
+@import "swiper/scss";
+@import "swiper/scss/navigation";
+@import "swiper/scss/pagination";
+
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
 
 /*:root {
     color-scheme: light dark;

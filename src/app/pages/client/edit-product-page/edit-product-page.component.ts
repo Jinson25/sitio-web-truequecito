@@ -5,7 +5,7 @@ import { Product } from '../../../shared/interfaces/product.interface';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { BASE_URL } from '../../../shared/constants/url.constants';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-product-page',
@@ -42,7 +42,13 @@ export class EditProductPageComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al cargar el producto:', error);
-        this.message = 'Error al cargar el producto.';
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al cargar el producto.',
+          timer: 1500,
+          showConfirmButton: false
+        });
       }
     });
   }
@@ -51,11 +57,25 @@ export class EditProductPageComponent implements OnInit {
     if (this.product) {
       this.productService.editProduct(this.product._id, this.product).subscribe({
         next: () => {
-          this.router.navigate([`${BASE_URL}/profile/products`]);
+          Swal.fire({
+            icon: 'success',
+            title: 'Producto guardado',
+            text: 'El producto ha sido guardado correctamente.',
+            timer: 1500,
+            showConfirmButton: false
+          }).then(() => {
+            this.router.navigate(['/profile/products']);
+          });
         },
         error: (error) => {
           console.error('Error al guardar el producto:', error);
-          this.message = 'Error al guardar el producto.';
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error al guardar el producto.',
+            timer: 1500,
+            showConfirmButton: false
+          });
         }
       });
     }

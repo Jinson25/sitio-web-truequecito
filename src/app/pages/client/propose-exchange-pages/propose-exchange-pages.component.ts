@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ProductService } from '../../../services/product.service';
 import { AuthService } from '../../../services/auth.service';
-import { URL_EXCHANGE } from '../../../shared/constants/url.constants';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-propose-exchange-pages',
@@ -40,6 +40,7 @@ export class ProposeExchangePagesComponent implements OnInit {
     this.productService.getProductById(productId).subscribe({
       next: (product) => {
         this.product = product;
+        console.log('Producto cargado:', product); // Añadir log para verificar datos
       },
       error: (error: any) => {
         console.error('Error al cargar el producto:', error);
@@ -62,12 +63,18 @@ export class ProposeExchangePagesComponent implements OnInit {
 
   handleSubmit(form: NgForm): void {
     if (!this.proposedExchangeProduct || !this.product) {
-      this.message = 'Selecciona los productos correctamente.';
+      Swal.fire({
+        icon: 'warning',
+        title: 'Error',
+        text: 'Selecciona los productos correctamente.',
+        timer: 1500,
+        showConfirmButton: false
+      });
       return;
     }
 
     if (form.valid) {
-      const userRequested = this.product.user;
+      const userRequested = this.product.user._id; // Asegúrate de usar el ID del usuario correctamente
 
       const exchangeData = {
         productOffered: this.proposedExchangeProduct._id,
@@ -78,15 +85,34 @@ export class ProposeExchangePagesComponent implements OnInit {
       const token = this.authService.getToken();
       const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
 
-      this.http.post(URL_EXCHANGE, exchangeData, { headers }).subscribe({
+      this.http.post('/api/exchanges', exchangeData, { headers }).subscribe({
         next: () => {
-          this.message = 'Propuesta de intercambio enviada correctamente.';
+          Swal.fire({
+            icon: 'success',
+            title: 'Propuesta de intercambio enviada correctamente',
+            timer: 1500,
+            showConfirmButton: false
+          }).then(() => {
+            this.router.navigate(['/']);
+          });
         },
         error: (error: any) => {
           console.error('Error al enviar la propuesta de intercambio:', error);
-          this.message = 'Error al enviar la propuesta de intercambio.';
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error al enviar la propuesta de intercambio.',
+            timer: 1500,
+            showConfirmButton: false
+          });
         }
       });
     }
+  }
+
+  onImageError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = 'assets/default_image.jpg';  // Ruta a la imagen por defecto
+    console.log('Error de imagen, cargando imagen por defecto');
   }
 }

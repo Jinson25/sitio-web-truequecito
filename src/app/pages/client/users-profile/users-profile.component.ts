@@ -13,7 +13,7 @@ import { Product } from '../../../shared/interfaces/product.interface';
   styleUrls: ['./users-profile.component.css']
 })
 export class UsersProfileComponent implements OnInit {
-  user: User = { id: '', email: '', username: '', avatar: '', token: '', role: '', following: [], followers: [], likes: 0 };
+  user: User = { id: '', email: '', username: '', avatar: '', token: '', role: '', following: [], followers: [], likes: [] };
   userProducts: Product[] = [];
   message: string = '';
   isEditModalOpen: boolean = false;
@@ -29,7 +29,7 @@ export class UsersProfileComponent implements OnInit {
   }
 
   getUser(): void {
-    this.http.get<User>(`api-rest-truequecito.onrender.com/api/auth/google/api/user/${this.Id}`)
+    this.http.get<User>(`http://localhost:5000/api/user/${this.Id}`)
       .subscribe(
         (data) => this.user = data,
         (error) => console.error('Error fetching user:', error)
@@ -42,7 +42,7 @@ export class UsersProfileComponent implements OnInit {
   }
 
   followUser(): void {
-    this.http.post(`api-rest-truequecito.onrender.com/api/auth/google/api/user/${this.Id}/follow`, {})
+    this.http.post(`http://localhost:5000/api/user/${this.Id}/follow`, {})
       .subscribe(
         (response: any) => {
           this.message = response.message;

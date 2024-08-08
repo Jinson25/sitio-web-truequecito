@@ -4,20 +4,20 @@
     <div class="flex-1 lg:max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
       <div class="container mx-auto p-6">
         <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg">
-          <h1 class="text-2xl font-bold mb-4 text-center">Agregar Producto</h1>
-          <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="space-y-4">
+          <h1 class="text-3xl font-bold mb-4 text-center text-pink-500">Agregar Producto</h1>
+          <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="space-y-6">
             <div>
               <label for="title" class="block text-sm font-medium text-gray-700">Título del Producto</label>
-              <input type="text" id="title" formControlName="title" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Título del Producto" required/>
+              <input type="text" id="title" formControlName="title" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm" placeholder="Título del Producto" required/>
             </div>
             <div>
               <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
-              <textarea id="description" formControlName="description" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Descripción" rows="4" required></textarea>
+              <textarea id="description" formControlName="description" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm" placeholder="Descripción" rows="4" required></textarea>
             </div>
             
             <div>
               <label for="estado" class="block text-sm font-medium text-gray-700">Estado del producto</label>
-              <select id="estado" formControlName="estado" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+              <select id="estado" formControlName="estado" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm">
                 <option value="nuevo">Nuevo</option>
                 <option value="seminuevo">Seminuevo</option> 
                 <option value="usado" selected>Usado</option>
@@ -26,22 +26,22 @@
             </div>
             <div>
               <label for="preference" class="block text-sm font-medium text-gray-700">Me interesaria intercambiar</label>
-              <select id="preference" formControlName="preference" (change)="mostrarOcultarInput()" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+              <select id="preference" formControlName="preference" (change)="mostrarOcultarInput()" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm">
                 <option value="Teconologia">Teconologia</option>
                 <option value="Arte">Arte</option>
                 <option value="Electrodomesticos">Electrodomesticos</option>
                 <option value="Muebles">Muebles</option>
                 <option value="otra">Algun interes en particular?</option>
-            </select>
-            <input type="text" id="otra" formControlName="preference" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Escribe otra opción" style="display: none;">
+              </select>
+              <input type="text" id="otra" formControlName="preference" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm" placeholder="Escribe otra opción" style="display: none;">
             </div>
 
             <div>
               <label for="images" class="block text-sm font-medium text-gray-700">URL</label>
-              <input type="text" id="images" formControlName="images" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="URLs de Imágenes (separadas por comas)"/>
+              <input type="text" id="images" formControlName="images" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm" placeholder="URLs de Imágenes (separadas por comas)"/>
             </div>
             <div class="flex justify-center">
-              <button type="submit" class="w-full py-2 px-4 bg-indigo-600 text-white rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Publicar</button>
+              <button type="submit" class="w-full py-2 px-4 bg-pink-500 text-white rounded-md shadow-sm hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">Publicar</button>
             </div>
           </form>
         </div>

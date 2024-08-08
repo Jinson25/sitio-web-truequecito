@@ -4,25 +4,51 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Proposal } from '../../shared/interfaces/product.interface';
 import { CommonModule } from '@angular/common';
+import { NotificationService } from '../../services/notification.service';
+import SwiperCore, { Pagination, Scrollbar, A11y } from 'swiper';
+import { SwiperModule } from 'swiper/angular';
+import { SwiperOptions } from 'swiper/types';
+
+SwiperCore.use([Pagination, Scrollbar, A11y]);
 
 @Component({
   selector: 'app-proposals-list',
   templateUrl: './proposals-list.component.html',
   styleUrls: ['./proposals-list.component.css'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, SwiperModule]
 })
 export class ProposalsListComponent implements OnInit {
   exchangesReceived: Proposal[] = [];
   exchangesSent: Proposal[] = [];
-  currentUser: Proposal | any;
+  currentUser: any;
 
-  constructor(private exchangeService: ExchangeService, private authService: AuthService, private router: Router) {}
+  configReceived: SwiperOptions = {
+    loop: false,
+    slidesPerView: 1,
+    spaceBetween: 30,
+    pagination: { clickable: true },
+    scrollbar: { draggable: true },
+  };
+
+  configSent: SwiperOptions = {
+    loop: false,
+    slidesPerView: 1,
+    spaceBetween: 1,
+    pagination: { clickable: true },
+    scrollbar: { draggable: true },
+  };
+
+  constructor(
+    private exchangeService: ExchangeService,
+    private authService: AuthService,
+    private router: Router,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.getUser();
     if (this.currentUser) {
-      console.log('Current user:', this.currentUser);
       this.loadReceivedExchanges();
       this.loadSentExchanges();
     } else {
@@ -31,11 +57,26 @@ export class ProposalsListComponent implements OnInit {
   }
 
   loadReceivedExchanges(): void {
-    console.log('Loading received exchanges');
     this.exchangeService.getReceivedExchanges().subscribe({
-      next: (exchanges) => {
-        this.exchangesReceived = exchanges;
-        console.log('Received exchanges loaded:', this.exchangesReceived);
+      next: (exchanges: Proposal[]) => {
+        this.exchangesReceived = exchanges.map((exchange: Proposal) => {
+          const updatedExchange = {
+            ...exchange,
+            userType: 'offered'
+          };
+
+          // Agregar notificación
+          this.notificationService.addNotification({
+            id: exchange._id,
+            message: `Propuesta de intercambio recibida para ${exchange.productRequested.title}`,
+            timestamp: new Date(),
+            read: false
+          });
+
+          return updatedExchange;
+        });
+
+        this.updateSwiperConfig();
       },
       error: (error) => {
         console.error('Error al cargar los intercambios recibidos:', error);
@@ -44,11 +85,18 @@ export class ProposalsListComponent implements OnInit {
   }
 
   loadSentExchanges(): void {
-    console.log('Loading sent exchanges');
     this.exchangeService.getSentExchanges().subscribe({
-      next: (exchanges) => {
-        this.exchangesSent = exchanges;
-        console.log('Sent exchanges loaded:', this.exchangesSent);
+      next: (exchanges: Proposal[]) => {
+        this.exchangesSent = exchanges.map((exchange: Proposal) => {
+          const updatedExchange = {
+            ...exchange,
+            userType: 'requested'
+          };
+
+          return updatedExchange;
+        });
+
+        this.updateSwiperConfig();
       },
       error: (error) => {
         console.error('Error al cargar los intercambios enviados:', error);
@@ -56,26 +104,27 @@ export class ProposalsListComponent implements OnInit {
     });
   }
 
+  updateSwiperConfig(): void {
+    this.configReceived.loop = this.exchangesReceived.length > 1;
+    this.configSent.loop = this.exchangesSent.length > 1;
+  }
+
   navigateToProduct(productId: string, exchangeId: string): void {
-    console.log(`Navigating to product with ID: ${productId} and exchange ID: ${exchangeId}`);
     this.router.navigate(['/product', productId, exchangeId]);
   }
 
   navigateToPayment(exchangeId: string): void {
-    console.log(`Navigating to payment for exchange ID: ${exchangeId}`);
     this.router.navigate(['/payment', exchangeId]);
   }
 
   onImageError(event: Event): void {
     const element = event.target as HTMLImageElement;
-    element.src = 'assets/default_image.jpg'; // Asegúrate de que la ruta sea correcta
+    element.src = 'assets/default_image.jpg';
   }
 
   acceptExchange(exchangeId: string, productId: string): void {
-    console.log(`Accepting exchange with ID: ${exchangeId}`);
     this.exchangeService.updateExchangeStatus(exchangeId, 'accepted').subscribe({
       next: (response) => {
-        console.log('Exchange accepted:', response);
         this.loadReceivedExchanges();
         this.router.navigate(['/product', productId, exchangeId]);
       },
@@ -86,10 +135,8 @@ export class ProposalsListComponent implements OnInit {
   }
 
   rejectExchange(exchangeId: string): void {
-    console.log(`Rejecting exchange with ID: ${exchangeId}`);
     this.exchangeService.updateExchangeStatus(exchangeId, 'rejected').subscribe({
       next: (response) => {
-        console.log('Exchange rejected:', response);
         this.loadReceivedExchanges();
       },
       error: (error) => {

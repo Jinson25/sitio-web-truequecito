@@ -1,127 +1,128 @@
-<!-- Propuestas Recibidas -->
-<div
-  *ngIf="exchangesReceived.length > 0"
-  class=" mt-4 bg-white p-6 rounded-lg shadow-lg w-full"
->
-  <h2 class="text-lg font-bold mb-4 text-pink-500">Intercambio Propuesto</h2>
-  <div class="mb-4" *ngFor="let exchange of exchangesReceived">
-    <p class="text-sm text-gray-600">
-      {{ exchange.userOffered.username }} te está proponiendo un intercambio
-    </p>
-    <div
-      class="flex justify-between items-center mb-4 space-x-4 group relative exchange-container"
-    >
-      <!-- Producto Ofrecido -->
-      <div
-        class="w-1/2 p-2 bg-gray-100 rounded-lg transform transition-transform duration-500 ease-in-out cursor-pointer product-card-1"
-        *ngIf="exchange?.productOffered"
-        (click)="navigateToProduct(exchange.productOffered._id, exchange._id)"
-      >
-        <h3 class="text-base font-semibold text-pink-500 mb-2">
-          {{ exchange.productOffered.title }}
-        </h3>
-        <img
-          [src]="exchange.productOffered.images[0]"
-          alt="Producto 1"
-          class="w-full h-auto rounded-lg object-cover"
-          (error)="onImageError($event)"
-        />
-      </div>
-      <!-- Producto Solicitado -->
-      <div
-        class="w-1/2 p-2 bg-gray-100 rounded-lg transform transition-transform duration-500 ease-in-out cursor-pointer product-card-2"
-        *ngIf="exchange?.productRequested"
-        (click)="navigateToProduct(exchange.productRequested._id, exchange._id)"
-      >
-        <h3 class="text-base font-semibold text-pink-500 mb-2">
-          {{ exchange.productRequested.title }}
-        </h3>
-        <img
-          [src]="exchange.productRequested.images[0]"
-          alt="Producto 2"
-          class="w-full h-auto rounded-lg object-cover"
-          (error)="onImageError($event)"
-        />
-      </div>
-    </div>
-    <div class="flex justify-around mt-4" *ngIf="exchange?.status !== 'accepted'">
-      <button
-        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full"
-        (click)="acceptExchange(exchange._id, exchange.productOffered._id)"
-      >
-        Revisar Oferta
-      </button>
-      <button
-        class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full"
-        (click)="rejectExchange(exchange._id)"
-      >
-        Rechazar
-      </button>
-    </div>
-    <div class="mt-4" *ngIf="exchange?.status === 'accepted'">
-      <p class="text-sm text-gray-600">
-        Esperando que el otro usuario haga el pago...
-      </p>
-    </div>
+<div class="container mx-auto px-4 py-8">
+  <!-- Propuestas Recibidas -->
+  <div *ngIf="exchangesReceived.length > 0" class="mt-4 bg-white p-6 rounded-lg shadow-lg w-full">
+    <h2 class="text-lg font-bold mb-4 text-pink-500">Intercambio Propuesto</h2>
+    <swiper  [config]="configReceived" class="custom-swiper">
+      <ng-template swiperSlide *ngFor="let exchange of exchangesReceived">
+        <p class="text-sm text-gray-600">
+          {{ exchange.userOffered.username }} te está proponiendo un intercambio
+        </p>
+        <div class="flex justify-between items-center mb-4 space-x-4 group relative exchange-container">
+          <!-- Producto Ofrecido -->
+          <div
+            class="w-1/2 p-2 bg-gray-100 rounded-lg transform transition-transform duration-500 ease-in-out cursor-pointer product-card-1"
+            *ngIf="exchange?.productOffered"
+            (click)="navigateToProduct(exchange.productOffered._id, exchange._id)"
+          >
+            <h3 class="text-base font-semibold text-pink-500 mb-2">
+              {{ exchange.productOffered.title }}
+            </h3>
+            <img
+              [src]="exchange.productOffered.images[0]"
+              alt="Producto 1"
+              class="w-full h-auto rounded-lg object-cover"
+              (error)="onImageError($event)"
+            />
+          </div>
+          <!-- Producto Solicitado -->
+          <div
+            class="w-1/2 p-2 bg-gray-100 rounded-lg transform transition-transform duration-500 ease-in-out cursor-pointer product-card-2"
+            *ngIf="exchange?.productRequested"
+            (click)="navigateToProduct(exchange.productRequested._id, exchange._id)"
+          >
+            <h3 class="text-base font-semibold text-pink-500 mb-2">
+              {{ exchange.productRequested.title }}
+            </h3>
+            <img
+              [src]="exchange.productRequested.images[0]"
+              alt="Producto 2"
+              class="w-full h-auto rounded-lg object-cover"
+              (error)="onImageError($event)"
+            />
+          </div>
+        </div>
+        <div class="flex justify-around mt-4" *ngIf="exchange?.status !== 'accepted'">
+          <button
+            class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full"
+            (click)="acceptExchange(exchange._id, exchange.productOffered._id)"
+          >
+            Revisar Oferta
+          </button>
+          <button
+            class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full"
+            (click)="rejectExchange(exchange._id)"
+          >
+            Rechazar
+          </button>
+        </div>
+        <div class="mt-4" *ngIf="exchange?.status === 'accepted'">
+          <p class="text-sm text-gray-600">
+            Esperando que el otro usuario haga el pago...
+          </p>
+        </div>
+      </ng-template>
+      <div class="swiper-button-prev "></div>
+      <div class="swiper-button-next"></div>
+    </swiper>
   </div>
-</div>
 
-<!-- Propuestas Enviadas -->
-<div
-  *ngIf="exchangesSent.length > 0"
-  class=" bg-white p-6 rounded-lg shadow-lg w-full z-50 mt-6"
->
-  <h2 class="text-lg font-bold mb-4 text-pink-500">Esperando Respuesta</h2>
-  <div class="mb-4" *ngFor="let exchange of exchangesSent">
-    <p class="text-sm text-gray-600">
-      Tu propuesta de intercambio está pendiente de respuesta.
-    </p>
-    <div
-      class="flex justify-between items-center mb-4 space-x-4 group relative exchange-container"
-    >
-      <!-- Producto Ofrecido -->
-      <div
-        class="w-1/2 p-2 bg-gray-100 rounded-lg transform transition-transform duration-500 ease-in-out cursor-pointer product-card-1"
-        *ngIf="exchange?.productOffered"
-        (click)="navigateToProduct(exchange.productOffered._id, exchange._id)"
-      >
-        <h3 class="text-base font-semibold text-pink-500 mb-2">
-          {{ exchange.productOffered.title }}
-        </h3>
-        <img
-          [src]="exchange.productOffered.images[0]"
-          alt="Producto 1"
-          class="w-full h-auto rounded-lg object-cover"
-          (error)="onImageError($event)"
-        />
-      </div>
-      <!-- Producto Solicitado -->
-      <div
-        class="w-1/2 p-2 bg-gray-100 rounded-lg transform transition-transform duration-500 ease-in-out cursor-pointer product-card-2"
-        *ngIf="exchange?.productRequested"
-        (click)="navigateToProduct(exchange.productRequested._id, exchange._id)"
-      >
-        <h3 class="text-base font-semibold text-pink-500 mb-2">
-          {{ exchange.productRequested.title }}
-        </h3>
-        <img
-          [src]="exchange.productRequested.images[0]"
-          alt="Producto 2"
-          class="w-full h-auto rounded-lg object-cover"
-          (error)="onImageError($event)"
-        />
-      </div>
-    </div>
-    <div class="mt-4" *ngIf="exchange?.status === 'accepted'">
-      <p class="text-sm text-gray-600">
-        Felicidades, el usuario {{ exchange.userRequested.username }} ha aceptado el trueque.
-      </p>
-      <button
-        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full"
-        (click)="navigateToPayment(exchange._id)"
-      >
-        Realizar Pago
-      </button>
-    </div>
+  <!-- Propuestas Enviadas -->
+  <div *ngIf="exchangesSent.length > 0" class="bg-white p-6 rounded-lg shadow-lg w-full z-50 mt-6">
+    <h2 class="text-lg font-bold mb-4 text-pink-500">Esperando Respuesta</h2>
+    <swiper class="custom-swiper custom-swiper" [config]="configSent">
+      <ng-template swiperSlide *ngFor="let exchange of exchangesSent">
+        <p class="text-sm text-gray-600">
+          Tu propuesta de intercambio está pendiente de respuesta.
+        </p>
+        <div class="flex justify-between items-center mb-4 space-x-4 group relative exchange-container">
+          <!-- Producto Ofrecido -->
+          <div
+            class="w-1/2 p-2 bg-gray-100 rounded-lg transform transition-transform duration-500 ease-in-out cursor-pointer product-card-1"
+            *ngIf="exchange?.productOffered"
+            (click)="navigateToProduct(exchange.productOffered._id, exchange._id)"
+          >
+            <h3 class="text-base font-semibold text-pink-500 mb-2">
+              {{ exchange.productOffered.title }}
+            </h3>
+            <img
+              [src]="exchange.productOffered.images[0]"
+              alt="Producto 1"
+              class="w-full h-auto rounded-lg object-cover"
+              (error)="onImageError($event)"
+            />
+          </div>
+          <!-- Producto Solicitado -->
+          <div
+            class="w-1/2 p-2 bg-gray-100 rounded-lg transform transition-transform duration-500 ease-in-out cursor-pointer product-card-2"
+            *ngIf="exchange?.productRequested"
+            (click)="navigateToProduct(exchange.productRequested._id, exchange._id)"
+          >
+            <h3 class="text-base font-semibold text-pink-500 mb-2">
+              {{ exchange.productRequested.title }}
+            </h3>
+            <img
+              [src]="exchange.productRequested.images[0]"
+              alt="Producto 2"
+              class="w-full h-auto rounded-lg object-cover"
+              (error)="onImageError($event)"
+            />
+          </div>
+        </div>
+        <div class="mt-4" *ngIf="exchange?.status === 'accepted'">
+          <p class="text-sm text-gray-600">
+            Felicidades, el usuario {{ exchange.userRequested.username }} ha aceptado el trueque.
+          </p>
+          <button
+            class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full"
+            *ngIf="exchange.status !== 'completed'"
+            (click)="navigateToPayment(exchange._id)"
+          >
+            Realizar Pago
+          </button>
+        </div>
+      </ng-template>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </swiper>
   </div>
 </div>

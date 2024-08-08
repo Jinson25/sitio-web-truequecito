@@ -1,6 +1,8 @@
+
+
 .exchange-container {
     position: relative;
-    height: 250px; /* Ajusta según sea necesario */
+    height: 280px; /* Ajusta según sea necesario */
   }
   
   .product-card-1,
@@ -79,4 +81,8 @@
     width: 100%;
     height: auto;
   }
-  
+
+  .custom-swiper {
+    width: 100%;
+    height: 410px;
+  }
