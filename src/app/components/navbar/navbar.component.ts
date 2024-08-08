@@ -60,6 +60,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   redirectToRegister(): void {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/login']);
   }
 }
