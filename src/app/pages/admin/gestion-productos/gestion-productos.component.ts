@@ -29,14 +29,12 @@ export class GestionProductosComponent implements OnInit {
     this.adminService.getAllProducts().subscribe(
       (data: any) => {
         this.products = data;
-        console.log('Productos cargados:', this.products); // Línea de depuración
       },
       (error) => {
         console.error('Error cargando productos', error);
       },
       () => {
         if (this.products.length === 0) {
-          console.log('No hay productos disponibles');
           this.noProducts = true; // Establece la bandera a true si no hay productos
         } else {
           this.noProducts = false; // Establece la bandera a false si hay productos
@@ -47,7 +45,6 @@ export class GestionProductosComponent implements OnInit {
 
   startEditProduct(product: any): void {
     this.selectedProduct = { ...product };
-    console.log('Producto seleccionado para editar:', this.selectedProduct); // Línea de depuración
     this.view = 'edit';
   }
 

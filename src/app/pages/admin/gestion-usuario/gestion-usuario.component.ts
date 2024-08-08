@@ -64,14 +64,11 @@ export class GestionUsuarioComponent implements OnInit {
   startEditUser(user: User): void {
     this.editUser = { ...user }; // Create a copy for editing
     this.view = 'edit'; // Switch to edit view
-    console.log('Editing user:', this.editUser); // Verifica el valor de editUser
   }
 
   saveEditUser(): void {
     if (this.editUser) {
-      console.log('Editing user:', this.editUser); // Verifica el valor de editUser
       if (!this.editUser.id) {
-        console.error('User ID is missing');
         return;
       }
 

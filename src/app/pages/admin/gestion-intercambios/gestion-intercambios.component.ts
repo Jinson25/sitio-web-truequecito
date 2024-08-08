@@ -25,13 +25,11 @@ export class GestionIntercambiosComponent implements OnInit {
 
   ngOnInit(): void {
     const currentUser = this.authService.getUser();
-    console.log('Current user:', currentUser);
 
     if (currentUser && currentUser.id) {
       this.currentUserId = currentUser.id;
-      console.log('Current user ID:', this.currentUserId);
     } else {
-      console.log('Usuario no autenticado o ID no encontrado');
+      console.error('No se pudo obtener el ID del usuario actual');
     }
     this.loadCompletedExchanges();
   }
@@ -39,9 +37,7 @@ export class GestionIntercambiosComponent implements OnInit {
   loadCompletedExchanges(): void {
     this.exchangeService.getCompletedExchanges().subscribe({
       next: (data) => {
-        console.log('Completed exchanges fetched:', data);
         this.exchanges = data.filter(exchange => exchange.status === 'completed');
-        console.log('Filtered exchanges:', this.exchanges);
         this.error = null;
       },
       error: (error) => {
@@ -64,7 +60,6 @@ export class GestionIntercambiosComponent implements OnInit {
       if (result.isConfirmed) {
         this.exchangeService.cancelExchange(exchangeId).subscribe({
           next: (response) => {
-            console.log('Exchange cancelled:', response.exchange);
             this.exchanges = this.exchanges.filter(exchange => exchange._id !== exchangeId);
             Swal.fire(
               'Cancelado!',
@@ -86,17 +81,14 @@ export class GestionIntercambiosComponent implements OnInit {
   }
 
   acceptExchange(exchangeId: string): void {
-    console.log('Accepting exchange with ID:', exchangeId); // Log para verificar el exchangeId
     this.exchangeService.acceptExchange(exchangeId).subscribe({
       next: (response) => {
-        console.log('Exchange accepted:', response.exchange);
         Swal.fire(
           'Intercambio Completado!',
           'El intercambio ha sido completado.',
           'success'
         );
         this.exchanges = this.exchanges.filter(exchange => exchange._id !== exchangeId);
-        console.log('Updated exchanges after acceptance:', this.exchanges);
       },
       error: (error: any) => {
         console.error('Error al aceptar el intercambio:', error);
@@ -113,7 +105,6 @@ export class GestionIntercambiosComponent implements OnInit {
   viewReceipt(receiptUrl: string): void {
     const baseUrl = 'https://api-rest-truequecito.onrender.com/uploads/'; // Cambia esto según tu configuración del servidor
     this.selectedReceiptUrl = `${baseUrl}${receiptUrl.replace(/^uploads[\\/]/, '')}`;
-    console.log('Mostrando el comprobante:', this.selectedReceiptUrl);
 
     if (!this.selectedReceiptUrl) {
       console.error('No se pudo cargar el comprobante:', receiptUrl);
@@ -121,7 +112,6 @@ export class GestionIntercambiosComponent implements OnInit {
   }
 
   closeReceiptModal(): void {
-    console.log('Cerrando el modal del comprobante');
     this.selectedReceiptUrl = null;
   }
 }

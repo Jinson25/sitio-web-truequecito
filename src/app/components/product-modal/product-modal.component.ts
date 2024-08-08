@@ -20,6 +20,5 @@ export class ProductModalComponent {
   onImageError(event: Event) {
     const imgElement = event.target as HTMLImageElement;
     imgElement.src = 'assets/default_image.jpg';
-    console.log('Error de imagen, cargando imagen por defecto');
   }
 }

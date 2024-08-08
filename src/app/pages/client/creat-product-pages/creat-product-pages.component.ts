@@ -78,7 +78,6 @@ export class CreatProductPagesComponent {
 
     this.http.post('https://api-rest-truequecito.onrender.com/api/products', productData, { headers }).subscribe(
       response => {
-        console.log('Producto agregado:', response);
         Swal.fire({
           icon: 'success',
           title: 'Producto agregado',

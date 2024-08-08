@@ -99,6 +99,5 @@ export class ProductListComponent implements OnInit {
   onImageError(event: Event) {
     const imgElement = event.target as HTMLImageElement;
     imgElement.src = 'assets/default_image.jpg';  // Ruta a la imagen por defecto
-    console.log('Error de imagen, cargando imagen por defecto');
   }
 }
