@@ -1,0 +1,111 @@
+<div class="p-4 bg-gray-100 min-h-screen">
+  <div class="max-w-4xl mx-auto">
+    <!-- Mensaje de error o de no intercambios encontrados -->
+    <div *ngIf="error" class="bg-red-100 text-red-700 p-4 mb-4 rounded-md border border-red-200">
+      {{ error }}
+    </div>
+    <div *ngIf="!error && exchanges.length === 0" class="text-center text-gray-600 p-4">
+      No se encontraron intercambios.
+    </div>
+    <div *ngIf="!error && exchanges.length > 0">
+      <div *ngFor="let exchange of exchanges" class="bg-white shadow-md rounded-lg overflow-hidden mb-6">
+        <div class="p-4 border-b border-gray-200">
+          <h3 class="text-xl font-semibold">Exchange ID: {{ exchange._id }}</h3>
+          <p class="text-gray-600 text-sm">Status: {{ exchange.status }}</p>
+        </div>
+        <div class="flex flex-col lg:flex-row p-4">
+          <!-- Producto Ofrecido -->
+          <div class="lg:w-1/2 mb-4 lg:mb-0 lg:pr-4 flex flex-col items-center">
+            <div class="w-full max-w-sm text-left">
+              <h4 class="text-lg font-semibold mb-2">Producto Ofrecido</h4>
+              <img [src]="exchange.productOffered.images[0]" alt="{{ exchange.productOffered.title }}" class="w-1/2 h-auto rounded-md shadow-sm mx-auto">
+              <p class="mt-2 text-gray-800 font-semibold text-base">Titulo: {{ exchange.productOffered.title }}</p>
+              <p class="text-gray-600 text-base">Descripcion: {{ exchange.productOffered.description }}</p>
+              <p class="text-gray-600 text-base">Estado: {{ exchange.productOffered.estado }}</p>
+              <p class="text-gray-600 text-base">Preferencia: {{ exchange.productOffered.preference }}</p>
+              <h4 class="text-lg font-semibold mb-2">Comprobante:</h4>
+              <div *ngIf="exchange.receiptRequested" class="mt-4">
+                <p class="text-gray-800 text-base">Comprobante subido por el usario {{ exchange.userOffered.username }} <a (click)="viewReceipt(exchange.receiptRequested)" class="text-blue-500 hover:underline cursor-pointer">Ver Comprobante</a></p>
+              </div>
+              <div class="mt-4">
+                <h4 class="text-lg font-semibold mb-2">Enviar a:</h4>
+              </div>
+             
+              <div class="mt-4 p-4 border rounded-md bg-gray-50">
+                <h5 class="font-semibold">Dirección:</h5>
+                <p class="text-gray-600">{{ exchange.addressOffered }}</p>
+                <h5 class="font-semibold">Teléfono:</h5>
+                <p class="text-gray-600">{{ exchange.phoneOffered }}</p>
+              </div>
+            </div>
+          </div>
+          <!-- Producto Solicitado -->
+          <div class="lg:w-1/2 flex flex-col items-center">
+            <div class="w-full max-w-sm text-left">
+              <h4 class="text-lg font-semibold mb-2">Producto Solicitado</h4>
+              <img [src]="exchange.productRequested.images[0]" alt="{{ exchange.productRequested.title }}" class="w-1/2 h-auto rounded-md shadow-sm mx-auto">
+              <p class="mt-2 text-gray-800 font-semibold text-base">Titulo: {{ exchange.productRequested.title }}</p>
+              <p class="text-gray-600 text-base">Descripcion: {{ exchange.productRequested.description }}</p>
+              <p class="text-gray-600 text-base">Estado: {{ exchange.productRequested.estado }}</p>
+              <p class="text-gray-600 text-base">Preferencia: {{ exchange.productRequested.preference }}</p>
+              <h4 class="text-lg font-semibold mb-2">Comprobante:</h4>
+              <div *ngIf="exchange.receiptOffered" class="mt-4">
+                <p class="text-gray-800 text-base">Comprobante subido por el usario {{ exchange.userRequested.username }}
+              <a (click)="viewReceipt(exchange.receiptOffered)" class="text-blue-500 hover:underline cursor-pointer">Ver Comprobante</a></p>
+              </div>
+              <div class="mt-4">
+                <h4 class="text-lg font-semibold mb-2">Enviar a:</h4>
+              </div>
+              <div class="mt-4 p-4 border rounded-md bg-gray-50">
+                <h5 class="font-semibold">Dirección:</h5>
+                <p class="text-gray-600">{{ exchange.addressRequested }}</p>
+                <h5 class="font-semibold">Teléfono:</h5>
+                <p class="text-gray-600">{{ exchange.phoneRequested }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-4 border-t border-gray-200">
+          <div class="mb-4">
+            <h4 class="text-lg font-semibold mb-2">Ofrecido por:</h4>
+            <p class="text-gray-800 text-base">Username: {{ exchange.userOffered.username }}</p>
+            <p class="text-gray-600 text-base">Email: {{ exchange.userOffered.email }}</p>
+          </div>
+          <div class="mb-4">
+            <h4 class="text-lg font-semibold mb-2">Recibido por:</h4>
+            <p class="text-gray-800 text-base">Username: {{ exchange.userRequested.username }}</p>
+            <p class="text-gray-600 text-base">Email: {{ exchange.userRequested.email }}</p>
+          </div>
+          <p class="text-gray-600 text-base">Codigo único: {{ exchange.uniqueCode }}</p>
+          <p class="text-gray-600 text-base">Creado el: {{ exchange.createdAt | date }}</p>
+          <div class="flex justify-end mt-4 space-x-2">
+            <button (click)="acceptExchange(exchange._id)" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-colors duration-300">
+              Aceptar Intercambio
+            </button>
+            <button (click)="cancelExchange(exchange._id)" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-300">
+              Cancelar Intercambio
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div *ngIf="selectedReceiptUrl" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+  <div class="bg-white rounded-lg overflow-hidden shadow-xl w-full max-w-2xl h-5/6">
+    <div class="flex justify-between items-center p-4 border-b">
+      <h3 class="text-xl font-semibold">Comprobante</h3>
+      <button (click)="closeReceiptModal()" class="text-gray-500 hover:text-gray-800">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="p-4 overflow-y-auto h-full">
+      <img *ngIf="selectedReceiptUrl" [src]="selectedReceiptUrl" alt="Comprobante" class="w-full h-full object-contain rounded-md"/>
+      <p *ngIf="!selectedReceiptUrl" class="text-red-500">No se pudo cargar la imagen del comprobante.</p>
+    </div>
+  </div>
+</div>

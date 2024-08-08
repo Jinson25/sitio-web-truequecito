@@ -1,0 +1,30 @@
+<!-- notifications.component.html -->
+<div class="container mx-auto p-6">
+  <h2 class="text-3xl font-bold mb-4 text-pink-600">Notificaciones</h2>
+  <div class="p-4 bg-white shadow-md rounded-lg">
+    <div *ngFor="let notification of notifications" 
+     class="notification-card p-4 mb-4 rounded-lg shadow-sm border border-gray-300 bg-white flex items-center justify-between"
+     [ngClass]="{'bg-gray-100': !notification.read, 'bg-white': notification.read}">
+  
+  <div>
+    <p class="notification-message font-semibold mb-2" 
+       [ngClass]="{'text-black': !notification.read, 'text-gray-500': notification.read}">
+      {{ notification.message }}
+    </p>
+    <small class="notification-timestamp text-gray-500">
+      {{ notification.timestamp | date: 'short' }}
+    </small>
+  </div>
+
+  <button *ngIf="!notification.read" 
+          (click)="markAsRead(notification.id)" 
+          class="notification-button bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 ml-4 rounded-md">
+    Marcar como leído
+  </button>
+</div>
+
+  </div>
+  <ng-template #noNotifications>
+    <p class="text-gray-500">No tienes notificaciones.</p>
+  </ng-template>
+</div>

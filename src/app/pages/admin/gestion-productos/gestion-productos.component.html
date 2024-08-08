@@ -1,0 +1,157 @@
+<div class="p-6 bg-gray-100 min-h-screen">
+  <h2 class="text-2xl font-bold mb-6">Gestión de Productos</h2>
+
+  <div class="mb-4 flex justify-end space-x-4">
+    <button class="bg-pink-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" (click)="toggleView('list')">Ver Productos</button>
+    <button class="bg-pink-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" (click)="toggleView('create')">Crear Productos</button>
+  </div>
+
+  <ng-container *ngIf="view === 'list'">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <ul *ngIf="!noProducts; else noProductsTemplate">
+        <li
+          *ngFor="let product of products"
+          class="flex items-center justify-between p-4 border-b last:border-none"
+        >
+          <div class="flex items-center space-x-3">
+            <img
+              [src]="product.images"
+              alt="Imagen del Producto"
+              class="w-12 h-12 object-cover rounded-full"
+            />
+            <div>
+              <h3 class="font-semibold text-lg">{{ product.title }}</h3>
+              <p class="text-gray-600">{{ product.description }}</p>
+            </div>
+          </div>
+          <div class="flex space-x-4">
+            <button
+              (click)="startEditProduct(product)"
+              class="text-blue-600 hover:text-blue-800 font-medium"
+            >
+              Editar
+            </button>
+            <button
+              (click)="deleteProduct(product._id)"
+              class="text-red-600 hover:text-red-800 font-medium"
+            >
+              Eliminar
+            </button>
+          </div>
+        </li>
+      </ul>
+      <ng-template #noProductsTemplate>
+        <div class="p-4 text-center text-gray-600">
+          Por el momento no hay ningún producto disponible.
+        </div>
+      </ng-template>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="view === 'create'">
+    <app-creat-product-pages></app-creat-product-pages>
+  </ng-container>
+
+  <ng-container *ngIf="view === 'edit' && selectedProduct">
+    <h3 class="text-xl font-semibold mb-4">Editar Producto</h3>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+        Título
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="title"
+        type="text"
+        [(ngModel)]="selectedProduct.title"
+        name="title"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="description"
+      >
+        Descripción
+      </label>
+      <textarea
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="description"
+        [(ngModel)]="selectedProduct.description"
+        name="description"
+        rows="4"
+        required
+      ></textarea>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="estado">
+        Estado
+      </label>
+      <select
+        id="estado"
+        [(ngModel)]="selectedProduct.estado"
+        name="estado"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      >
+        <option value="nuevo">Nuevo</option>
+        <option value="seminuevo">Seminuevo</option>
+        <option value="usado">Usado</option>
+        <option value="reparado">Reparado</option>
+      </select>
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="preference"
+      >
+        Preferencia
+      </label>
+      <select
+        id="preference"
+        [(ngModel)]="selectedProduct.preference"
+        name="preference"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      >
+        <option value="Tecnologia">Tecnología</option>
+        <option value="Arte">Arte</option>
+        <option value="Electrodomesticos">Electrodomésticos</option>
+        <option value="Muebles">Muebles</option>
+        <option value="otra">Otra</option>
+      </select>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="images">
+        URL de Imágenes
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="images"
+        type="text"
+        [(ngModel)]="selectedProduct.images[0]"
+        name="images"
+        required
+      />
+      <div class="mt-4">
+        <img
+          [src]="selectedProduct.images[0]"
+          class="w-full h-auto object-contain rounded"
+          alt="Imagen del producto"
+        />
+      </div>
+    </div>
+    <div class="flex items-center justify-between">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        (click)="saveEditProduct()"
+      >
+        Guardar
+      </button>
+      <button
+        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        (click)="cancelEdit()"
+      >
+        Cancelar
+      </button>
+    </div>
+  </ng-container>
+</div>

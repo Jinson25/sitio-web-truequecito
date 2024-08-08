@@ -1,0 +1,48 @@
+<div>
+  <h2 class="text-xl font-bold mb-4">Gestión de Roles</h2>
+
+  <div class="mb-4 flex justify-end space-x-4">
+    <button class="bg-pink-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" (click)="toggleView('list')">Ver Roles</button>
+    <button class="bg-pink-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" (click)="toggleView('create')">Crear Rol</button>
+  </div>
+
+  <ng-container *ngIf="view === 'list'">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+      <ul>
+        <li *ngFor="let role of roles" class="flex items-center justify-between p-4 border-b last:border-none">
+          <div class="flex items-center space-x-3">
+            <span class="font-semibold">{{ role.name }}</span>
+          </div>
+          <div class="flex space-x-4">
+            <button (click)="startEditRole(role)" class="text-blue-500 hover:text-blue-700 font-medium">Editar</button>
+            <button (click)="deleteRole(role._id)" class="text-red-500 hover:text-red-700 font-medium">Eliminar</button> <!-- Cambié 'role.id' a 'role._id' -->
+          </div>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="view === 'create'">
+    <form (ngSubmit)="createRole()" class="space-y-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+        Nombre del rol
+      </label>
+      <input [(ngModel)]="newRole.name" name="name" placeholder="Nombre del Rol" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required id="title"/>
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Crear Rol</button>
+    </form>
+  </ng-container>
+
+  <ng-container *ngIf="view === 'edit' && selectedRole">
+    <h3 class="text-lg font-bold mb-2">Editar Rol</h3>
+    <form (ngSubmit)="saveEditRole()" class="space-y-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+        Nombre del rol
+      </label>
+      <input [(ngModel)]="selectedRole.name" name="editName" placeholder="Nombre del Rol" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required id="title"/>
+      <div class="flex space-x-2">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Guardar Cambios</button>
+        <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" (click)="cancelEdit()">Cancelar</button>
+      </div>
+    </form>
+  </ng-container>
+</div>

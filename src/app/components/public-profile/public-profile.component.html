@@ -1,0 +1,56 @@
+<div class="modal-content p-6 bg-white rounded-lg shadow-lg max-w-lg mx-auto">
+  <div class="flex justify-between items-center border-b pb-3 mb-4">
+    <h2 class="text-xl font-semibold text-gray-800">Perfil de Usuario</h2>
+  </div>
+  <div *ngIf="loading" class="p-4">
+    Cargando perfil...
+  </div>
+  <div *ngIf="error" class="p-4 text-red-500">
+    {{ error }}
+  </div>
+  <div *ngIf="!loading && !error" class="p-4">
+    <div class="flex flex-col items-center mb-6">
+      <img [src]="user.avatar || 'https://cdn-icons-png.flaticon.com/512/3607/3607444.png'" alt="{{user.username}}'avatar" class="w-24 h-24 rounded-full mb-4 shadow-lg">
+      <div class="text-center">
+        <h2 class="text-2xl font-semibold text-gray-900">{{ user.username }}</h2>
+        <p class="text-gray-700 mb-2">{{ user.email }}</p>
+      </div>
+    </div>
+    <div class="mb-6 text-center">
+      <p class="text-gray-700"><strong>Reputación:</strong> {{ user.reputation ?? 0 }}</p>
+      <p class="text-gray-700"><strong>Intercambios realizados:</strong> {{ user.exchanges ?? 0 }}</p>
+    </div>
+    <div class="mb-6 flex justify-around">
+      <div class="flex flex-col items-center">
+        <strong>Seguidores:</strong>
+        <span class="mt-1 bg-blue-100 text-blue-800 text-sm font-semibold px-2.5 py-0.5 rounded">{{ user.followers?.length ?? 0 }}</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <strong>Likes:</strong>
+        <span class="mt-1 bg-red-100 text-red-800 text-sm font-semibold px-2.5 py-0.5 rounded">{{ user.likes?.length ?? 0 }}</span>
+      </div>
+    </div>
+    <div class="container mx-auto">
+      <h3 class="text-2xl font-semibold text-pink-500 mb-4 text-center">Productos para intercambio</h3>
+      <swiper [config]="config" class="mySwiper">
+        <ng-template swiperSlide *ngFor="let product of user.products ?? []">
+          <div class="flex flex-col items-center justify-center bg-white rounded-lg shadow-lg p-4 max-w-xs mx-auto">
+            <img [src]="product.images[0]" alt="{{product.title}}" class="product-image mb-4">
+            <span class="text-lg font-semibold mb-2">{{ product.title }}</span>
+            <button class="bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-300" (click)="proposeExchange(product._id)">
+              Proponer Intercambio
+            </button>
+          </div>
+        </ng-template>
+      </swiper>
+    </div>
+    <div class="mt-6 flex justify-center space-x-4">
+      <button class="bg-green-500 text-white py-2 px-4 rounded-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-colors duration-300" (click)="followUser()">
+        {{ isFollowing ? 'Dejar de Seguir' : 'Seguir' }}
+      </button>
+      <button class="bg-red-500 text-white py-2 px-4 rounded-full hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition-colors duration-300" [disabled]="hasLiked" (click)="likeUser()">
+        {{ hasLiked ? 'Ya has dado Like' : 'Dar Like' }}
+      </button>
+    </div>
+  </div>
+</div>
