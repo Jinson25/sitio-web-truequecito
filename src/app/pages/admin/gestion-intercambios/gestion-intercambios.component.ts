@@ -111,7 +111,7 @@ export class GestionIntercambiosComponent implements OnInit {
   
 
   viewReceipt(receiptUrl: string): void {
-    const baseUrl = 'http://localhost:5000/uploads/'; // Cambia esto según tu configuración del servidor
+    const baseUrl = 'https://api-rest-truequecito.onrender.com/uploads/'; // Cambia esto según tu configuración del servidor
     this.selectedReceiptUrl = `${baseUrl}${receiptUrl.replace(/^uploads[\\/]/, '')}`;
     console.log('Mostrando el comprobante:', this.selectedReceiptUrl);
 
